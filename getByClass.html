@@ -1,0 +1,32 @@
+<!-- 针对IE8不支持getElementsByClassName,使用正则表达式自己封装的函数 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>getByClassName</title>
+</head>
+<body>
+	<div class="aa cc">div1</div>
+	<div class="bb">div2</div>
+	<div class="cc">div3</div>
+	<script>
+		function getByClass(cls,context){
+			context = context || document;
+			if(context.getElementsByClassName){
+				return context.getElementsByClassName(cls);
+			}
+			var result = [];
+			var arr = context.getElementsByTagName('*');
+			var re = new RegExp("\\b"+cls+"\\b");//""前面必须加上/
+			for(var i=0;i<arr.length;i++){
+				if(re.test(arr[i].className)){
+					result.push(arr[i]);
+				}
+			}
+			return result;
+		}
+		var aDiv = getByClass('cc');//document.getElementsByClassName('aaa');
+		console.log(aDiv);
+	</script>
+</body>
+</html>
